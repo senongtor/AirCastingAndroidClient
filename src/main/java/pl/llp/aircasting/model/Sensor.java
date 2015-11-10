@@ -72,6 +72,10 @@ public class Sensor implements Serializable
     return sensorName;
   }
 
+  public String getUniqueName() {
+    return getSensorName() + getPackageName() + getAddress();
+  }
+
   public String getMeasurementType() {
     return measurementType;
   }

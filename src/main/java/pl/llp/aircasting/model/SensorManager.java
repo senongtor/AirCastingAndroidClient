@@ -1,5 +1,6 @@
 package pl.llp.aircasting.model;
 
+import android.util.Log;
 import pl.llp.aircasting.activity.ApplicationState;
 import pl.llp.aircasting.activity.events.SessionChangeEvent;
 import pl.llp.aircasting.android.Logger;
@@ -67,7 +68,9 @@ public class SensorManager
 
     // IOIO
     Sensor visibleSensor = getVisibleSensor();
-    if (visibleSensor != null && visibleSensor.matches(getSensorByName(event.getSensorName())))
+    Log.v("HELLO", visibleSensor.getUniqueName());
+    Log.v("HELLO/3", event.getUniqueName());
+    if (visibleSensor != null && visibleSensor.matches(getSensorByName(event.getUniqueName())))
     {
       MeasurementLevel level = null;
       if (sessionManager.isSessionSaved())
@@ -83,7 +86,7 @@ public class SensorManager
     }
     // end of IOIO
 
-    if(sensors.containsKey(SensorName.from(event.getSensorName())))
+    if(sensors.containsKey(SensorName.from(event.getUniqueName())))
     {
       return;
     }
@@ -94,7 +97,7 @@ public class SensorManager
       if (disabled.contains(sensor)) {
         sensor.toggle();
       }
-      SensorName name = SensorName.from(sensor.getSensorName());
+      SensorName name = SensorName.from(sensor.getUniqueName());
       if(!sensors.containsKey(name))
       {
         sensors.put(name, sensor);
@@ -105,7 +108,8 @@ public class SensorManager
   @Subscribe
   public void onEvent(ViewStreamEvent event)
   {
-    String sensorName = event.getSensor().getSensorName();
+    String sensorName = event.getSensor().getUniqueName();
+    Log.v("HELLO/2", sensorName);
     visibleSensor = sensors.get(SensorName.from(sensorName));
     if(visibleSensor == null) visibleSensor = AUDIO_SENSOR;
     eventBus.post(new StreamUpdateEvent(visibleSensor));
@@ -118,7 +122,7 @@ public class SensorManager
   }
 
   public Sensor getVisibleSensor() {
-    String sensorName = visibleSensor.getSensorName();
+    String sensorName = visibleSensor.getUniqueName();
     Sensor sensor = sensors.get(SensorName.from(sensorName));
     return sensor != null ? sensor : AUDIO_SENSOR;
   }
@@ -139,7 +143,7 @@ public class SensorManager
    * @param sensor toggle enabled/disabled status of this Sensor
    */
   public void toggleSensor(Sensor sensor) {
-    String name = sensor.getSensorName();
+    String name = sensor.getUniqueName();
     Sensor actualSensor = sensors.get(SensorName.from(name));
     actualSensor.toggle();
   }
@@ -164,7 +168,7 @@ public class SensorManager
       }
 
       Sensor sensor = new Sensor(stream);
-      String name = sensor.getSensorName();
+      String name = sensor.getUniqueName();
       sensors.put(SensorName.from(name), sensor);
 
       visibleSensor = sensor;
@@ -178,7 +182,7 @@ public class SensorManager
 
   public void deleteSensorFromCurrentSession(Sensor sensor)
   {
-    String sensorName = sensor.getSensorName();
+    String sensorName = sensor.getUniqueName();
     sensors.remove(SensorName.from(sensorName));
     sessionManager.deleteSensorStream(sensor);
   }
@@ -222,7 +226,7 @@ public class SensorManager
     }
     sensors = newSensors;
 
-    String sensorName = visibleSensor.getSensorName();
+    String sensorName = visibleSensor.getUniqueName();
     if(!sensors.containsKey(SensorName.from(sensorName)))
     {
       eventBus.post(new ViewStreamEvent(SimpleAudioReader.getSensor()));

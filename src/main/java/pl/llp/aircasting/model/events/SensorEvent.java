@@ -30,6 +30,10 @@ public class SensorEvent extends AirCastingEvent
     return sensorName;
   }
 
+  public String getUniqueName() {
+    return getSensorName() + getPackageName() + getAddress();
+  }
+
   public String getUnit()
   {
     return unit;

@@ -68,7 +68,7 @@ public class Session implements Serializable
 
   public void add(MeasurementStream stream)
   {
-    streams.put(stream.getSensorName(), stream);
+    streams.put(stream.getUniqueName(), stream);
   }
 
   public void setTitle(String text) {

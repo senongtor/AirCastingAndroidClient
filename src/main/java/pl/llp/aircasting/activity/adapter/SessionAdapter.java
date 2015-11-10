@@ -70,7 +70,7 @@ public class SessionAdapter extends ArrayAdapter
       view.findViewById(R.id.avg_container).setVisibility(View.VISIBLE);
       view.findViewById(R.id.peak_container).setVisibility(View.VISIBLE);
 
-      String name = selectedSensor.getSensorName();
+      String name = selectedSensor.getUniqueName();
       MeasurementStream stream = session.getStream(name);
       int peak = (int) stream.getPeak();
       int avg = (int) stream.getAvg();

@@ -216,7 +216,7 @@ public class MeasurementPresenter implements SharedPreferences.OnSharedPreferenc
 
     Stopwatch stopwatch = new Stopwatch().start();
 
-    String sensorName = sensor.getSensorName();
+    String sensorName = sensor.getUniqueName();
     MeasurementStream stream = sessionManager.getMeasurementStream(sensorName);
     Iterable<Measurement> measurements;
     if (stream == null)

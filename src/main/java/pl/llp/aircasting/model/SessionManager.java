@@ -229,7 +229,7 @@ public class SessionManager
     event = sensorEventTransformer.transform(event);
 
     double value = event.getValue();
-    String sensorName = event.getSensorName();
+    String sensorName = event.getUniqueName();
     Sensor sensor = sensorManager.getSensorByName(sensorName);
     recentMeasurements.put(sensorName, value);
 
@@ -262,7 +262,7 @@ public class SessionManager
 
   private MeasurementStream prepareStream(SensorEvent event)
   {
-    String sensorName = event.getSensorName();
+    String sensorName = event.getUniqueName();
 
     if (!session.hasStream(sensorName)) {
       MeasurementStream stream = event.stream();
@@ -311,10 +311,10 @@ public class SessionManager
   }
 
   public synchronized double getNow(Sensor sensor) {
-    if (!recentMeasurements.containsKey(sensor.getSensorName())) {
+    if (!recentMeasurements.containsKey(sensor.getUniqueName())) {
       return 0;
     }
-    return recentMeasurements.get(sensor.getSensorName());
+    return recentMeasurements.get(sensor.getUniqueName());
   }
 
   private void notifyNewSession(Session session) {
@@ -382,7 +382,7 @@ public class SessionManager
   }
 
   public double getAvg(Sensor sensor) {
-    String sensorName = sensor.getSensorName();
+    String sensorName = sensor.getUniqueName();
 
     if (session.hasStream(sensorName)) {
       return session.getStream(sensorName).getAvg();
@@ -392,7 +392,7 @@ public class SessionManager
   }
 
   public double getPeak(Sensor sensor) {
-    String sensorName = sensor.getSensorName();
+    String sensorName = sensor.getUniqueName();
 
     if (session.hasStream(sensorName)) {
       return session.getStream(sensorName).getPeak();
@@ -402,7 +402,7 @@ public class SessionManager
   }
 
   public List<Measurement> getMeasurements(Sensor sensor) {
-    String name = sensor.getSensorName();
+    String name = sensor.getUniqueName();
 
     if (session.hasStream(name)) {
       MeasurementStream stream = session.getStream(name);
@@ -414,7 +414,7 @@ public class SessionManager
 
   public void deleteSensorStream(Sensor sensor)
   {
-    String sensorName = sensor.getSensorName();
+    String sensorName = sensor.getUniqueName();
     deleteSensorStream(sensorName);
   }
 

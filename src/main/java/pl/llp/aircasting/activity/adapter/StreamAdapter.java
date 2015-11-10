@@ -107,6 +107,7 @@ public class StreamAdapter extends SimpleAdapter implements View.OnClickListener
 
     @Subscribe
     public void onEvent(SensorEvent event) {
+        Log.v("HELLO/4", event.getUniqueName());
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -247,7 +248,7 @@ public class StreamAdapter extends SimpleAdapter implements View.OnClickListener
     }
 
     private Map<String, Object> prepareItem(Sensor sensor) {
-        String name = sensor.getSensorName();
+        String name = sensor.getUniqueName();
         if (!sensors.containsKey(name)) {
             HashMap<String, Object> map = new HashMap<String, Object>();
             sensors.put(name, map);
