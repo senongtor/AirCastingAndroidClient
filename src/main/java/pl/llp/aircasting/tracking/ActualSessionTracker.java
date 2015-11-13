@@ -1,5 +1,6 @@
 package pl.llp.aircasting.tracking;
 
+import android.util.Log;
 import pl.llp.aircasting.helper.MetadataHelper;
 import pl.llp.aircasting.helper.SettingsHelper;
 import pl.llp.aircasting.model.Measurement;
@@ -98,6 +99,7 @@ public class ActualSessionTracker implements SessionTracker
   @Override
   public void addStream(final MeasurementStream stream)
   {
+    Log.v("HELLO/06", String.format("%s", stream.getUniqueName()));
     session.add(stream);
     dbQueue.add(sessions.addStreamTask(stream, session));
   }

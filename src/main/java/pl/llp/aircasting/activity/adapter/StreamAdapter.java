@@ -107,7 +107,7 @@ public class StreamAdapter extends SimpleAdapter implements View.OnClickListener
 
     @Subscribe
     public void onEvent(SensorEvent event) {
-        Log.v("HELLO/4", event.getUniqueName());
+        Log.v("HELLO/04", event.getUniqueName());
         context.runOnUiThread(new Runnable() {
             @Override
             public void run() {

@@ -232,6 +232,7 @@ public class SessionManager
     String sensorName = event.getUniqueName();
     Sensor sensor = sensorManager.getSensorByName(sensorName);
     recentMeasurements.put(sensorName, value);
+    Log.v("HELLO/05", String.format("%s %f", sensorName, value));
 
     Location location = getLocation();
     if (location != null && sensor != null && sensor.isEnabled())

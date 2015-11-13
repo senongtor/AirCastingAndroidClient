@@ -68,8 +68,8 @@ public class SensorManager
 
     // IOIO
     Sensor visibleSensor = getVisibleSensor();
-    Log.v("HELLO", visibleSensor.getUniqueName());
-    Log.v("HELLO/3", event.getUniqueName());
+    Log.v("HELLO/01", visibleSensor.getUniqueName());
+    Log.v("HELLO/03", event.getUniqueName());
     if (visibleSensor != null && visibleSensor.matches(getSensorByName(event.getUniqueName())))
     {
       MeasurementLevel level = null;
@@ -109,7 +109,7 @@ public class SensorManager
   public void onEvent(ViewStreamEvent event)
   {
     String sensorName = event.getSensor().getUniqueName();
-    Log.v("HELLO/2", sensorName);
+    Log.v("HELLO/02", sensorName);
     visibleSensor = sensors.get(SensorName.from(sensorName));
     if(visibleSensor == null) visibleSensor = AUDIO_SENSOR;
     eventBus.post(new StreamUpdateEvent(visibleSensor));
